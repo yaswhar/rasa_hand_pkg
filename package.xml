@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>rasa_hand_pkg</name>
+  <version>0.0.0</version>
+  <description>Servo test package via Arduino Nano.</description>
+  <maintainer email="zafari.h.yashar@gmail.com">Yashar Zafari</maintainer>
+  <license>Apache-2.0</license>
+
+  <!-- Build and run dependencies -->
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake_python</buildtool_depend>
+  <!-- <buildtool_depend>rosidl_default_generators</buildtool_depend> -->
+  <depend>rclpy</depend>
+  <depend>rclcpp</depend>
+  <depend>example_interfaces</depend>
+
+  <!-- Python runtime -->
+  <exec_depend>pyserial</exec_depend>
+
+  <!-- Mark as an interface package to generate srv/msg -->
+  <!-- <member_of_group>rosidl_interface_packages</member_of_group> -->
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

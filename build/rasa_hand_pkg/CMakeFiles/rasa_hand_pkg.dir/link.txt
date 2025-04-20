@@ -1,0 +1,2 @@
+/usr/bin/ar qc librasa_hand_pkg.a CMakeFiles/rasa_hand_pkg.dir/src/cpp_node.cpp.o
+/usr/bin/ranlib librasa_hand_pkg.a

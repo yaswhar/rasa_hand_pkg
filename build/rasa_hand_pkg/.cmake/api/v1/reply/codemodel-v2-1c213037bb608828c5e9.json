@@ -1,0 +1,106 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-e357e0a45b7d0190e58e.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "rasa_hand_pkg",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_build_rasa_hand_pkg_egg::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_build_rasa_hand_pkg_egg-9229bbc046c682b3b8ee.json",
+					"name" : "ament_cmake_python_build_rasa_hand_pkg_egg",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_copy_rasa_hand_pkg::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_copy_rasa_hand_pkg-85014ac25da4e50ffba0.json",
+					"name" : "ament_cmake_python_copy_rasa_hand_pkg",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "cpp_executable::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-cpp_executable-442521cae5fe0d8ef41c.json",
+					"name" : "cpp_executable",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "rasa_hand_pkg::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-rasa_hand_pkg-6f8bf745bb1acf60e876.json",
+					"name" : "rasa_hand_pkg",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "rasa_hand_pkg_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-rasa_hand_pkg_uninstall-217e5ca23257784a2cbb.json",
+					"name" : "rasa_hand_pkg_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-d101f5d003a7989750d5.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/yaswhar/ros2_ws/src/rasa_hand_pkg/build/rasa_hand_pkg",
+		"source" : "/home/yaswhar/ros2_ws/src/rasa_hand_pkg"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}
