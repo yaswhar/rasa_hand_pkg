@@ -1,5 +1,7 @@
 ROS2 package for RASA's new hand. Both C++ and Python in Single Package.
 
+First, upload the firmware code in the Windows environment, and then run the launch file on the Ubuntu environment. I still don't know why I can't directly upload through WSL2 although I can give commands, but nevermind!
+
 ## WSL2 & USB Connection
 I use `usbipd` to connect the USB on Windows environment to Ubuntu environment via WSL2.
 
