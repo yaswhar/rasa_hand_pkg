@@ -2,10 +2,8 @@
 
 import rclpy
 from rclpy.node import Node
-from std_msgs.msg import Float64
 import serial
 import threading
-import math
 import time
 
 class ServoTester(Node):
@@ -13,52 +11,70 @@ class ServoTester(Node):
     def __init__(self):
         super().__init__('servo_tester_node')
 
-        # Declare parameters
+        # Parameters
         self.declare_parameter('serial_port', '/dev/ttyUSB0')
         self.declare_parameter('baudrate', 115200)
 
-        port = self.get_parameter('serial_port').get_parameter_value().string_value
-        baud = self.get_parameter('baudrate').get_parameter_value().integer_value
+        port = self.get_parameter('serial_port').value
+        baud = self.get_parameter('baudrate').value
 
         # Open the serial port
         self.ser = serial.Serial(port, baud, timeout=1)
         self.get_logger().info(f'Opened serial {port}@{baud}')
 
-        # Wait ~2s for Arduino auto‑reset & bootloader
+        # Give Arduino time to reset
         time.sleep(2.0)
-        # Flush any spurious data
         self.ser.reset_input_buffer()
+        self.ser.reset_output_buffer()
 
-        # Start a thread to print any Arduino responses
+        # Thread to echo any Arduino responses
         threading.Thread(target=self._read_serial, daemon=True).start()
 
-        # Create and **store** the subscription so it isn't GC'd
-        self.subscription = self.create_subscription(
-            Float64,
-            'servo_position',
-            self.position_callback,
-            10
-        )
-        self.get_logger().info('Subscribed to /servo_position; waiting for messages…')
+        # Sweep settings
+        self._angle = 0
+        self._step = 5
+        self._direction = 1  # +1 = increasing, -1 = decreasing
+
+        # Timer: fire every 20 ms (50 Hz)
+        self.create_timer(0.02, self._timer_callback)
+
+        # If you ever want external setpoint control again:
+        # self.subscription = self.create_subscription(
+        #     Float64, 'servo_position', self.position_callback, 10)
 
     def _read_serial(self):
-        """Continuously read and log lines from the Arduino."""
+        """Echo lines sent back from the Arduino."""
         while rclpy.ok():
             line = self.ser.readline().decode('utf-8', errors='ignore').strip()
             if line:
                 self.get_logger().info(f"[Arduino] {line}")
 
-    def position_callback(self, msg: Float64):
-        """Convert incoming radians → degrees, send angle command."""
-        radians = msg.data
-        degrees = max(0.0, min(180.0, radians * 180.0 / math.pi))
-        cmd = f"ANGLE:{degrees:.1f}\n"
+    def _timer_callback(self):
+        """Called periodically to sweep the servo."""
+        # Update angle
+        self._angle += self._direction * self._step
+        if self._angle >= 180:
+            self._angle = 180
+            self._direction = -1
+        elif self._angle <= 0:
+            self._angle = 0
+            self._direction = 1
+
+        # Send command
+        cmd = f"ANGLE:{self._angle}\n"
         self.ser.write(cmd.encode('utf-8'))
-        self.ser.flush()  # ensure it goes out immediately
+        self.ser.flush()
         self.get_logger().info(f"→ Sent: {cmd.strip()}")
 
+    # In case you keep the subscriber version:
+    # def position_callback(self, msg: Float64):
+    #     deg = max(0.0, min(180.0, math.degrees(msg.data)))
+    #     cmd = f"ANGLE:{deg:.1f}\n"
+    #     self.ser.write(cmd.encode('utf-8'))
+    #     self.ser.flush()
+    #     self.get_logger().info(f"→ Sent: {cmd.strip()}")
+
     def destroy_node(self):
-        """Clean up serial on shutdown."""
         try:
             if self.ser.is_open:
                 self.ser.close()
